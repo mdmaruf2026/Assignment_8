@@ -18,7 +18,8 @@ export default function Home() {
 
       <div className="bg-primary text-primary-content py-2 overflow-hidden">
         {/* <marquee> */}
-          {/* New Arrivals: The Alchemist | Clean Code | Sapiens | Harry Potter | Special Discount on Memberships!</marquee> */}
+          New Arrivals: The Alchemist | Clean Code | Sapiens | Harry Potter | Special Discount on Memberships!
+          {/* </marquee> */}
       </div>
 
       <div className="container mx-auto px-4 py-12">
