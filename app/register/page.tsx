@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signUp, signIn } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -10,17 +11,16 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
     const res = await signUp.email({ name, email, password, image: photoUrl });
     if (res.error) {
-      setError(res.error.message || "Registration failed");
+      toast.error(res.error.message || "Registration failed!");
     } else {
+      toast.success("Registration successful!");
       router.push("/login");
     }
     setLoading(false);
@@ -35,7 +35,6 @@ export default function RegisterPage() {
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold text-center justify-center mb-4">Register</h2>
-          {error && <div className="alert alert-error text-sm">{error}</div>}
           <form onSubmit={handleRegister}>
             <div className="form-control mb-3">
               <label className="label"><span className="label-text">Name</span></label>

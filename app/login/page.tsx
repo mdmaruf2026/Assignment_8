@@ -3,22 +3,22 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
     const res = await signIn.email({ email, password });
     if (res.error) {
-      setError(res.error.message || "Login failed");
+      toast.error(res.error.message || "Login failed!");
     } else {
+      toast.success("Login successful!");
       router.push("/");
     }
     setLoading(false);
@@ -33,7 +33,6 @@ export default function LoginPage() {
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold text-center justify-center mb-4">Login</h2>
-          {error && <div className="alert alert-error text-sm">{error}</div>}
           <form onSubmit={handleLogin}>
             <div className="form-control mb-3">
               <label className="label"><span className="label-text">Email</span></label>
